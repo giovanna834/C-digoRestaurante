@@ -1,4 +1,5 @@
-package DAO;
+
+package funcionario;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,27 +7,23 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import bean.Produto;
-import Conexão.ConexaoComMySQL;
 
-public class ProdutoDAO {
 
-private Connection conexao=null;
+public class PedidoDAO {
+    private Connection conexao=null;
 
-    public ProdutoDAO() {
+    public PedidoDAO() {
     conexao = ConexaoComMySQL.getConexaoMySQL();
     }
     
     //inserir
-    public boolean insert(Produto produto){ 
-        String sql = "INSERT INTO produto (nomeProduto, valor, qtdDisponivel) VALUES (?,?,?)";
+    public boolean insert(Pedido pedido){ 
+        String sql = "INSERT INTO pedido (Valor_total,status) VALUES (?)";
         PreparedStatement statement = null;
         try{
         statement = conexao.prepareStatement(sql);
-        statement.setInt(1, produto.getIdProduto());
-        statement.setString(2, produto.getNomeProduto());
-        statement.setDouble(3, produto.getValor());
-        statement.setInt(4, produto.getQtdDisponivel());
+        statement.setDouble(1, pedido.getValor_total());
+        statement.setString(2, pedido.getstatus());
         statement.executeUpdate();
         return true;
     }catch (SQLException e){
@@ -39,20 +36,19 @@ private Connection conexao=null;
     }
     
     //SELECT
-    public List<Produto> select(){ 
-         String sql = "SELECT * FROM produto";
+    public List<Pedido> select(){ 
+         String sql = "SELECT * FROM pedido";
          PreparedStatement statement = null;
          ResultSet resultset = null;
-         List<Produto> produtos = new ArrayList<>();
+         List<Pedido> pedidos = new ArrayList<>();
          try{
              statement = conexao.prepareStatement(sql);
              resultset = statement.executeQuery();
              while(resultset.next()){
-             Produto produto = new Produto();
-             produto.setNomeProduto(resultset.getString("nomeProduto"));
-             produto.setValor(resultset.getDouble("valor"));
-             produto.setQtdDisponivel(resultset.getInt("qtdDisponivel"));
-             produtos.add(produto);
+                 Pedido pedido = new Pedido();
+                 pedido.setStatus(resultset.getString("status"));
+                 pedido.setValor_total(resultset.getDouble("Valor_total"));
+                 pedidos.add(pedido);
              }
          }catch(SQLException e ){
              System.out.println("erro "+e);
@@ -60,19 +56,18 @@ private Connection conexao=null;
          finally{
              ConexaoComMySQL.FecharConexao();
          }
-         return produtos;
+         return pedidos;
     }
     
     //UPDATE
-    public boolean update (Produto produto){ 
-        String sql = "UPDATE produto SET nomeProduto = ? WHERE id= ?";
+    public boolean update (Pedido pedido){ 
+        String sql = "UPDATE pedido SET status = ? WHERE id= ?";
         PreparedStatement statement = null;
         try{
         statement = conexao.prepareStatement(sql);
-        statement.setInt(1, produto.getIdProduto());
-        statement.setString(2, produto.getNomeProduto());
-        statement.setDouble(3, produto.getValor());
-        statement.setDouble(4, produto.getQtdDisponivel());
+         statement.setInt(1, pedido.getIdPedido());
+         statement.setDouble(2, pedido.getValor_total());
+        statement.setString(3, pedido.getstatus());
         statement.executeUpdate();
         return true;
     }catch (SQLException e){
@@ -85,15 +80,15 @@ private Connection conexao=null;
     }
     
     //DELETE
-    public boolean delete (Produto produto){
-        String sql = "DELETE FROM produto WHERE id = ?";
+    public boolean delete (Pedido pedido){
+        String sql = "DELETE FROM pedido WHERE id = ?";
         PreparedStatement statement = null;
         try{
         statement = conexao.prepareStatement(sql);
-        statement.setInt(1, produto.getIdProduto());
-        statement.setString(2, produto.getNomeProduto());
-        statement.setDouble(3, produto.getValor());
-        statement.setDouble(3, produto.getQtdDisponivel());
+        statement.setInt(1, pedido.getIdPedido());
+         statement.setDouble(2, pedido.getValor_total());
+        statement.setString(3, pedido.getstatus());
+        
         statement.executeUpdate();
         return true;
     }catch (SQLException e){

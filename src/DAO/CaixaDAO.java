@@ -19,7 +19,7 @@ private Connection conexao=null;
     
     //inserir
     public boolean insert(Caixa caixa){ 
-        String sql = "INSERT INTO caixa (saldoInicial, saldoFinal, horaInicial, horaFinal, DataPedido) VALUES (?)";
+        String sql = "INSERT INTO caixa (saldoInicial, saldoFinal, horaInicial, horaFinal, DataPedido) VALUES (?,?,?,?,?)";
         PreparedStatement statement = null;
         try{
         statement = conexao.prepareStatement(sql);
@@ -50,7 +50,11 @@ private Connection conexao=null;
              resultset = statement.executeQuery();
              while(resultset.next()){
              Caixa caixa = new Caixa();
-             caixa.setIdCaixa(resultset.getInt("SaldoInicial,SaldoFinal,horaInicial, horaFinal, DataPedido"));
+             caixa.setSaldoInicial(resultset.getDouble("SaldoInicial"));
+             caixa.setSaldoFinal(resultset.getDouble("SaldoFinal"));
+             caixa.setHoraInicial(resultset.getString("HoraInicial"));
+             caixa.setHoraFinal(resultset.getString("HoraFinal"));
+             caixa.setDataPedido(resultset.getDate("DataPedido"));
              caixas.add(caixa);
              }
          }catch(SQLException e ){
@@ -64,7 +68,7 @@ private Connection conexao=null;
     
     //UPDATE
     public boolean update (Caixa caixa){ 
-        String sql = "UPDATE categoria SET caixa = ? WHERE id= ?";
+        String sql = "UPDATE caixa SET saldoInicial = ? WHERE id= ?";
         PreparedStatement statement = null;
         try{
         statement = conexao.prepareStatement(sql);

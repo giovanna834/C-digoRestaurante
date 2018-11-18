@@ -18,7 +18,7 @@ private Connection conexao=null;
     
     //inserir
     public boolean insert(Funcionario funcionario){ 
-        String sql = "INSERT INTO funcionario (nome, RG, CPF, Telefone) VALUES (?)";
+        String sql = "INSERT INTO funcionario (nome, RG, CPF, Telefone) VALUES (?,?,?,?)";
         PreparedStatement statement = null;
         try{
         statement = conexao.prepareStatement(sql);
@@ -49,7 +49,10 @@ private Connection conexao=null;
              resultset = statement.executeQuery();
              while(resultset.next()){
              Funcionario funcionario = new Funcionario();
-             funcionario.setIdFuncio(resultset.getInt("Nome, RG, CPF, Telefone"));
+             funcionario.setNome(resultset.getString("Nome"));
+             funcionario.setRG(resultset.getInt("RG"));
+             funcionario.setCPF(resultset.getInt("CPF"));
+             funcionario.setTelefone(resultset.getInt("telefone"));
              funcionarios.add(funcionario);
              }
          }catch(SQLException e ){
@@ -62,12 +65,16 @@ private Connection conexao=null;
     }
     
     //UPDATE
-    public boolean update (Caixa caixa){ 
-        String sql = "UPDATE categoria SET funcionario = ? WHERE id= ?";
+    public boolean update (Funcionario funcionario){ 
+        String sql = "UPDATE funcionario SET nome = ? WHERE id= ?";
         PreparedStatement statement = null;
         try{
         statement = conexao.prepareStatement(sql);
-      
+        statement.setInt(1, funcionario.getIdFuncio());
+        statement.setString(2, funcionario.getNome());
+        statement.setDouble(3, funcionario.getRG());
+        statement.setInt(4, funcionario.getCPF());
+        statement.setInt(5, funcionario.getTelefone());
         statement.executeUpdate();
         return true;
     }catch (SQLException e){

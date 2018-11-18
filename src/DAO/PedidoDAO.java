@@ -19,12 +19,13 @@ public class PedidoDAO {
     
     //inserir
     public boolean insert(Pedido pedido){ 
-        String sql = "INSERT INTO pedido (Valor_total,status) VALUES (?)";
+        String sql = "INSERT INTO pedido (Valor_total,status) VALUES (?,?)";
         PreparedStatement statement = null;
         try{
         statement = conexao.prepareStatement(sql);
-        statement.setDouble(1, pedido.getValor_total());
-        statement.setString(2, pedido.getStatus());
+        statement.setInt(1, pedido.getIdPedido());
+        statement.setDouble(2, pedido.getValor_total());
+        statement.setString(3, pedido.getStatus());
         statement.executeUpdate();
         return true;
     }catch (SQLException e){

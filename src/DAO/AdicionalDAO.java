@@ -17,7 +17,7 @@ private Connection conexao=null;
     
     //inserir
     public boolean insert(Adicional adicional){ 
-        String sql = "INSERT INTO Adicional(descricao,valor_adicional) VALUES (?)";
+        String sql = "INSERT INTO Adicional(descricao,valor_adicional) VALUES (?,?)";
         PreparedStatement statement = null;
         try{
         statement = conexao.prepareStatement(sql);
@@ -46,6 +46,7 @@ private Connection conexao=null;
              while(resultset.next()){
                  Adicional adicional = new Adicional();
                  adicional.setDescricao(resultset.getString("descricao"));
+                 adicional.setValor_adicional(resultset.getDouble("valor_adicional"));
                  adicionais.add(adicional);
              }
          }catch(SQLException e ){

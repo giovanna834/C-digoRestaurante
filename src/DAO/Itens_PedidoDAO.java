@@ -19,7 +19,7 @@ private Connection conexao=null;
     
     //inserir
     public boolean insert(Itens_Pedido itens_pedido){ 
-        String sql = "INSERT INTO itens_pedido (idPedido, idProduto, idAdicional, quantidade, valorUni, valorTotal) VALUES (?)";
+        String sql = "INSERT INTO itens_pedido (idPedido, idProduto, idAdicional, quantidade, valorUni, valorTotal) VALUES (?,?,?,?,?,?)";
         PreparedStatement statement = null;
         try{
         statement = conexao.prepareStatement(sql);
@@ -52,7 +52,12 @@ private Connection conexao=null;
              resultset = statement.executeQuery();
              while(resultset.next()){
              Itens_Pedido itens_pedido = new Itens_Pedido();
-             itens_pedido.setIdItens(resultset.getInt("idPedido, idProduto, idAdicional, quantidade, valorUni, valorTotal"));
+             itens_pedido.setIdPedido(resultset.getInt("idPedido"));
+             itens_pedido.setIdProduto(resultset.getInt("idPruduto"));
+             itens_pedido.setIdAdicional(resultset.getInt("idAdicional"));
+             itens_pedido.setQuantidade(resultset.getInt("quantidade"));
+             itens_pedido.setValorUni(resultset.getDouble("ValorUni"));
+             itens_pedido.setValorTotal(resultset.getDouble("ValorTotal"));
              itens_pedidos.add(itens_pedido);
              }
          }catch(SQLException e ){
@@ -65,12 +70,18 @@ private Connection conexao=null;
     }
     
     //UPDATE
-    public boolean update (Itens_Pedido itens_pedidos){ 
-        String sql = "UPDATE categoria SET itens_pedido = ? WHERE id= ?";
+    public boolean update (Itens_Pedido itens_pedido){ 
+        String sql = "UPDATE itens_pedido SET quantidade = ? WHERE id= ?";
         PreparedStatement statement = null;
         try{
         statement = conexao.prepareStatement(sql);
-        
+        statement.setInt(1,itens_pedido.getIdItens());
+        statement.setInt(2,itens_pedido.getIdPedido());
+        statement.setInt(3,itens_pedido.getIdProduto());
+        statement.setInt(4,itens_pedido.getIdAdicional());
+        statement.setInt(5,itens_pedido.getQuantidade());
+        statement.setDouble(6,itens_pedido.getValorUni());
+        statement.setDouble(7,itens_pedido.getValorTotal());
         statement.executeUpdate();
         return true;
     }catch (SQLException e){
