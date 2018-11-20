@@ -1,13 +1,15 @@
 package bean;
 
 public class Produto {
-public int idProduto; 
+private int idProduto; 
 private String nomeProduto;
-private double valorProduto;  
+private double valor;  
+private int qtdDisponivel;
 
-    public Produto(String nomeProduto, double valorProduto) {
+public Produto(String nomeProduto, double valor, int qtdDisponivel) {
         this.nomeProduto = nomeProduto;
-        this.valorProduto = valorProduto;
+        this.valor = valor;
+        this.qtdDisponivel = qtdDisponivel;
     }
 
 public Produto() {
@@ -29,20 +31,21 @@ public Produto() {
         this.nomeProduto = nomeProduto;
     }  
     
-    public double getValorProduto() {
-        return valorProduto;
+    public double getValor() {
+        return valor;
     }
 
-    public void setValorProduto(double valorProduto) {
-        this.valorProduto= valorProduto;
-    }
-
-    public void CadastrarProduto(String nomeProduto, double valorProduto) {
-        this.idProduto = idProduto;
-        this.nomeProduto = nomeProduto;
-        this.valorProduto = valorProduto;
+    public void setValor(double valor) {
+        this.valor= valor;
     }
     
+    public int getQtdDisponivel() {
+        return qtdDisponivel;
+    }
+
+    public void setQtdDisponivel(int qtdDisponivel) {
+        this.qtdDisponivel= qtdDisponivel;
+    }
 }
 
 

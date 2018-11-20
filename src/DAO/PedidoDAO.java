@@ -19,16 +19,14 @@ public class PedidoDAO {
     
     //inserir
     public boolean insert(Pedido pedido){ 
-        String sql = "INSERT INTO pedido (idPedido,valor_total,status,idProduto) VALUES (?,?,?,?)";
+        String sql = "INSERT INTO pedido (Valor_total,status) VALUES (?,?)";
         PreparedStatement statement = null;
         try{
         statement = conexao.prepareStatement(sql);
         statement.setInt(1, pedido.getIdPedido());
         statement.setDouble(2, pedido.getValor_total());
         statement.setString(3, pedido.getStatus());
-        statement.setInt(4, pedido.getIdProduto());
         statement.executeUpdate();
-        
         return true;
     }catch (SQLException e){
             System.out.println("erro: "+e);
@@ -52,7 +50,6 @@ public class PedidoDAO {
                  Pedido pedido = new Pedido();
                  pedido.setStatus(resultset.getString("status"));
                  pedido.setValor_total(resultset.getDouble("Valor_total"));
-                 pedido.setIdProduto(resultset.getInt("idProduto"));
                  pedidos.add(pedido);
              }
          }catch(SQLException e ){
@@ -73,7 +70,6 @@ public class PedidoDAO {
          statement.setInt(1, pedido.getIdPedido());
          statement.setDouble(2, pedido.getValor_total());
         statement.setString(3, pedido.getStatus());
-        statement.setInt(4, pedido.getIdProduto());
         statement.executeUpdate();
         return true;
     }catch (SQLException e){
@@ -94,7 +90,7 @@ public class PedidoDAO {
         statement.setInt(1, pedido.getIdPedido());
          statement.setDouble(2, pedido.getValor_total());
         statement.setString(3, pedido.getStatus());
-        statement.setInt(4, pedido.getIdProduto());
+        
         statement.executeUpdate();
         return true;
     }catch (SQLException e){

@@ -19,13 +19,14 @@ private Connection conexao=null;
     
     //inserir
     public boolean insert(Produto produto){ 
-        String sql = "INSERT INTO produto (idProduto,nomeProduto,valorProduto) VALUES (?,?,?)";
+        String sql = "INSERT INTO produto (nomeProduto, valor, qtdDisponivel) VALUES (?,?,?)";
         PreparedStatement statement = null;
         try{
         statement = conexao.prepareStatement(sql);
         statement.setInt(1, produto.getIdProduto());
         statement.setString(2, produto.getNomeProduto());
-        statement.setDouble(3, produto.getValorProduto());
+        statement.setDouble(3, produto.getValor());
+        statement.setInt(4, produto.getQtdDisponivel());
         statement.executeUpdate();
         return true;
     }catch (SQLException e){
@@ -49,7 +50,8 @@ private Connection conexao=null;
              while(resultset.next()){
              Produto produto = new Produto();
              produto.setNomeProduto(resultset.getString("nomeProduto"));
-             produto.setValorProduto(resultset.getDouble("valorProduto"));
+             produto.setValor(resultset.getDouble("valor"));
+             produto.setQtdDisponivel(resultset.getInt("qtdDisponivel"));
              produtos.add(produto);
              }
          }catch(SQLException e ){
@@ -69,7 +71,8 @@ private Connection conexao=null;
         statement = conexao.prepareStatement(sql);
         statement.setInt(1, produto.getIdProduto());
         statement.setString(2, produto.getNomeProduto());
-        statement.setDouble(3, produto.getValorProduto());
+        statement.setDouble(3, produto.getValor());
+        statement.setDouble(4, produto.getQtdDisponivel());
         statement.executeUpdate();
         return true;
     }catch (SQLException e){
@@ -89,8 +92,8 @@ private Connection conexao=null;
         statement = conexao.prepareStatement(sql);
         statement.setInt(1, produto.getIdProduto());
         statement.setString(2, produto.getNomeProduto());
-        statement.setDouble(3, produto.getValorProduto());
-
+        statement.setDouble(3, produto.getValor());
+        statement.setDouble(3, produto.getQtdDisponivel());
         statement.executeUpdate();
         return true;
     }catch (SQLException e){

@@ -18,7 +18,7 @@ private Connection conexao=null;
     
     //inserir
     public boolean insert(Funcionario funcionario){ 
-        String sql = "INSERT INTO funcionario (IdFuncio,nome, RG, CPF, Telefone) VALUES (?,?,?,?,?)";
+        String sql = "INSERT INTO funcionario (nome, RG, CPF, Telefone) VALUES (?,?,?,?)";
         PreparedStatement statement = null;
         try{
         statement = conexao.prepareStatement(sql);
