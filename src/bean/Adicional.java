@@ -1,5 +1,5 @@
 package bean;
-
+import bean.Pedido;
 public class Adicional {
    private int idAdicional;
     private String descricao;
@@ -37,5 +37,15 @@ public class Adicional {
 
     public void setValor_adicional(double valor_adicional) {
         this.valor_adicional = valor_adicional;
+    }
+
+    public void CadastrarAdicional(String descricao, double valor_adicional) {
+        this.descricao = descricao;
+        this.valor_adicional = valor_adicional;
+    }
+    public void TotalAdicional()
+    {
+    Pedido pedido=new Pedido();
+    Double Valor_Total=valor_adicional+(pedido.getValor_total());
     }
 }

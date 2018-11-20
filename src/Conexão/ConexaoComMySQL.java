@@ -25,9 +25,9 @@ try {
             Class.forName(driverName);
 
 // Configurando a nossa conexão com um banco de dados//
-            String serverName = "localhost";    //caminho do servidor do BD
+            String serverName = "127.0.0.1:3306";    //caminho do servidor do BD
 
-            String mydatabase = "restaurante:3306";        //nome do seu banco de dados
+            String mydatabase = "restaurante";        //nome do seu banco de dados
 
             String url = "jdbc:mysql://" + serverName + "/" + mydatabase;//server:numeroDaPorta
 

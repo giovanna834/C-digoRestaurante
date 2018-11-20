@@ -1,12 +1,12 @@
 package bean;
-
+import java.util.Scanner;
 public class Funcionario 
 {
-private int idFuncio;
-private String nome;
-private int RG;
-private int CPF;
-private int telefone;       
+protected int idFuncio;
+public String nome;
+public int RG;
+public int CPF;
+public int telefone;       
     //construtor com descrição
     public Funcionario(String nome, int RG, int CPF, int telefone) 
     {
@@ -63,5 +63,17 @@ private int telefone;
       {
         this.telefone = telefone;
       }
-     
-}
+    public void CadastrarFuncionarios(String nome, int RG, int CPF, int telefone) {
+        this.nome = nome;
+        this.RG = RG;
+        this.CPF = CPF;
+        this.telefone = telefone;
+    }
+    
+    }
+    
+
+    
+    
+    
+
