@@ -4,6 +4,7 @@ public class Adicional {
    private int idAdicional;
     private String descricao;
     private double valor_adicional;
+    public double valor;
     //construtor com descrição
 
     public Adicional(String descricao, double valor_adicional) {
@@ -43,9 +44,8 @@ public class Adicional {
         this.descricao = descricao;
         this.valor_adicional = valor_adicional;
     }
-    public void TotalAdicional()
+    public double TotalAdicional()
     {
-    Pedido pedido=new Pedido();
-    Double Valor_Total=valor_adicional+(pedido.getValor_total());
+    return valor_adicional;
     }
 }

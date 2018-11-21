@@ -29,20 +29,13 @@ public class Restaurante {
     
     public static Pedido RegistrarPedido(Pedido pedido) 
     {    
-        Scanner read = new Scanner(System.in); 
-        System.out.print("ID do Produto:");
-        int idProduto = read.nextInt();
+        Adicional adicional = new Adicional();
+        Scanner read = new Scanner(System.in);
         System.out.print("Status:");
         String status = read.nextLine();
-        
-        pedido.CadastrarPedido(status,idProduto);
-        System.out.println("Deseja acrescentar adicional?(S/N)");
-        String resposta=read.nextLine();
-        if ("S".equals(resposta))
-        {
-        
-        }
-        
+        System.out.print("Valor:");
+        double valor_total= read.nextDouble();
+        pedido.CadastrarPedido(valor_total,status);
         return pedido;
         
     }
@@ -61,6 +54,7 @@ public class Restaurante {
     }
     public static Adicional RegistrarNovoAdicional(Adicional adicional) 
     {    
+        
         Scanner read = new Scanner(System.in);
 
         System.out.print("Descrição do Produto adicional:");
@@ -77,7 +71,7 @@ public class Restaurante {
   {     
         Scanner read=new Scanner(System.in);
         System.out.println("Olá, O que você deseja realizar no sistema?");
-        System.out.print("1-Cadastrar Funcionário\n2-Cadastrar Pedido\n3-Cadastrar novo produto\n4-Cadastrar novo adicional\n");
+        System.out.print("1-Cadastrar Funcionário\n2-Cadastrar Pedido\n3-Cadastrar novo produto\n");
         String resposta = read.nextLine();
         System.out.println("");
         if ("1".equals(resposta))
@@ -90,11 +84,53 @@ public class Restaurante {
         }     
         else if ("2".equals(resposta)) 
         {
+        Dinheiro dinheiro=new Dinheiro();
+        Adicional adicional = new Adicional();
         System.out.println("CADASTRO DE PEDIDO");
         Pedido pedido = new Pedido();
         RegistrarPedido(pedido);
         PedidoDAO PedDAO = new PedidoDAO();
         PedDAO.insert(pedido);
+        System.out.println("Deseja acrescentar adicional?(S/N)");
+        String res=read.nextLine();
+        if ("S".equals(res))
+        { 
+        RegistrarNovoAdicional(adicional);
+        AdicionalDAO adDAO = new AdicionalDAO();
+        adDAO.insert(adicional);
+        double total=adicional.TotalAdicional()+pedido.TotalPedido();
+        System.out.println(""); 
+        System.out.println("Total a pagar:"+total);
+        System.out.println("Valor pago pelo cliente:");
+        double valorCliente=read.nextDouble();
+           if (valorCliente==total)
+           {
+           dinheiro.ConfirmarPagamento();
+           }
+           else if (valorCliente>total)
+           {
+           double troco=valorCliente-total;
+           dinheiro.Valor_Troco(troco);
+           }
+        }
+        else if ("N".equals(res))
+        {
+        double total=pedido.TotalPedido();
+            System.out.println(""); 
+        System.out.println("Total a pagar:"+total);
+        System.out.print("Valor pago pelo cliente:");
+        double valorCliente=read.nextDouble();
+          if (valorCliente==total)
+           {
+           dinheiro.ConfirmarPagamento();
+           }
+           else if (valorCliente>total)
+           {
+           double troco=valorCliente-total;
+           dinheiro.Valor_Troco(troco);
+           }
+        }
+        
         } 
         else if ("3".equals(resposta)) 
         {
@@ -103,15 +139,7 @@ public class Restaurante {
         RegistrarNovoProduto(produto);
         ProdutoDAO ProDAO = new ProdutoDAO();
         ProDAO.insert(produto);
-        } 
-        else if ("4".equals(resposta)) 
-        {
-        System.out.println("CADASTRO DE PRODUTOS ADICIONAIS");
-        Adicional adicional = new Adicional();
-        RegistrarNovoAdicional(adicional);
-        AdicionalDAO adDAO = new AdicionalDAO();
-        adDAO.insert(adicional);
-        } 
+        }         
     }
     public static void main(String[] args) {
     Escolha();
